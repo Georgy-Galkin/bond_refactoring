@@ -17,6 +17,8 @@ logging.basicConfig(filename='stg_X5.log', encoding='utf-8', level=logging.DEBUG
 urllib3.disable_warnings()
 
 # для подключения к API Insides нужно получать два токена Keycloak: access_token и refresh_token
+login_Creds = {"client_id": "bdsp-api-public", "username": "ivan.petrov@bonduelle.com", "password": "Bonduelle@2025",
+               "grant_type": "password"}
 # startDate = str(datetime.date.today()-datetime.timedelta(days=11))
 #date_load = datetime.date(2024, 1, 25)
 date_load = datetime.date(2023, 8, 21)

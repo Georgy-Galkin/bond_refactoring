@@ -13,9 +13,9 @@ logging.basicConfig(level=logging.INFO)
 
 # ========================== CONSTANTS ==========================
 LOGIN_CREDS = {
-    "client_id": "-",
-    "username": "-",
-    "password": "-",
+    "client_id": "bdsp-api-public",
+    "username": "ivan.petrov@bonduelle.com",
+    "password": "Bonduelle@2025",
     "grant_type": "password"
 }
 TOKEN_URL                   = 'https://dialog-sso.x5.ru/auth/realms/dialog/protocol/openid-connect/token'
