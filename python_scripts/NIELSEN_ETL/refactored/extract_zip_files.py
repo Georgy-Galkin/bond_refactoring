@@ -1,65 +1,69 @@
-import zipfile as zf
+# ========================== IMPORTS ==============================
+import zipfile
 import os
-import  logging
+import logging
 import re
+from pathlib import Path
+import json
 
+# ========================== LOGGER SETUP ======================
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-path = 'N:/NB/'
-extracted_path = path+'extracted_data/'
-try:
-    os.mkdir(extracted_path)    
-except:
-    pass
-zip_file_list = os.listdir(path)
-list_of_files = []
-temp_counter = 0
-zip_file_list = [file[0:file.find('.')] for file in zip_file_list if file.find('.zip') > 0]
-nameslist = zip_file_list[:]
-#write_to_csv = csv.writer(open(extracted_path+'fact_data/MERGED_fact_data.csv','w',newline=""),delimiter="|")
+# ========================== UTILS ============================
+def make_dir_if_not_exists(path: Path):
+    """
+    Creates directory if it does not exist
+    """
+    if not path.exists():
+        path.mkdir(parents=True)
+        logging.info(f"Created directory: {path}")
 
+def get_list_of_zip_files(path: Path):
+    """
+    Returns a list of zip files
+    """
+    return [f.stem for f in path.glob("*.zip")]
 
-# p = re.compile(r'_')
-# arr = []
-# for i in nameslist:
-#     for q in range(len(nameslist)):
-#         p.split(nameslist[q])
-#     f = p.split(i)
-#     c = f[0] + "_" + f[1]
-#     arr.append(c)
-# print(f, c, arr, zip_file_list)
-# exit()
+def get_grouped_folder_name(name: str):
+    '''
+    Splits zip folder name by _ symbol.
+    Concatenates only first two parts.
+    '''
+    parts = re.split(r"_", name)
+    return f"{parts[0]}_{parts[1]}" if len(parts) > 1 else name
 
-def extract():
-    p = re.compile(r'_')
-    arr = []
-    for i in nameslist:
-        for q in range(len(nameslist)):
-            p.split(nameslist[q])
-        f = p.split(i)
-        c = f[0] + "_" + f[1]
-        arr.append(c)
-    progress_bar = 1 
-    logging.info('Extracting data from ZIP')
-    logging.info('0/%d'%len(zip_file_list))
-    for i in range(len(zip_file_list)):
-        zip_file_list[i] = path+zip_file_list[i]+'.zip'
-        with zf.ZipFile(zip_file_list[i]) as f:
-            temp_list = f.namelist()
-            temp_counter = 0
-            for j in temp_list:
-                if j.find('.csv') == -1:
-                    temp_list.pop(temp_counter)
-                temp_counter = temp_counter+1
-            list_of_files.append(temp_list)
-            for file in temp_list:
-               # print(nameslist[i].replace('BON_',''))
-                f.extract(file,extracted_path+'/'+arr[i].replace('BON_',''))  
-                os.rename(extracted_path+'/'+arr[i].replace('BON_','')+'/'+file,extracted_path+'/'+arr[i].replace('BON_','')+'/'+file.replace('BON_',''))  
-            logging.info('%d/%d'%(progress_bar,len(zip_file_list)))            
-            progress_bar = progress_bar+1
-    logging.info('ZIP Extraction Done!')
+# ==== MAIN FUNCTION ====
+def extract_zip_files(root_path: Path, extracted_path: Path):
+    """
+    Extracts data from zip files in root_path to extracted path
+    """
+    make_dir_if_not_exists(extracted_path)
 
+    zip_filenames_list = get_list_of_zip_files(root_path)
+    logging.info(f"Found {len(zip_filenames_list)} ZIP files")
 
+    for zip_number, zip_file in enumerate(zip_filenames_list, 1):
+        zip_file_path = root_path / f"{zip_file}.zip"
+        grouped_name = get_grouped_folder_name(zip_file).replace("BON_", "")
+        target_folder = extracted_path / grouped_name
 
-if __name__ == '__main__':
-    extract()
+        make_dir_if_not_exists(target_folder)
+
+        try:
+            with zipfile.ZipFile(zip_file_path, 'r') as archive:
+                csv_files = [f for f in archive.namelist() if f.endswith(".csv")]
+
+                for file in csv_files:
+                    archive.extract(file, path=target_folder)
+                    original_path = target_folder / file
+                    renamed_path = target_folder / file.replace("BON_", "")
+                    os.rename(original_path, renamed_path)
+
+            logging.info(f"[{zip_number}/{len(zip_file)}] Extracted: {zip_file_path.name}")
+
+        except zipfile.BadZipFile:
+            logging.error(f"❌ Corrupted ZIP: {zip_file_path.name}")
+        except Exception as e:
+            logging.error(f"❌ Failed to extract {zip_file_path.name}: {e}")
+
+    logging.info("✅ ZIP extraction completed")
