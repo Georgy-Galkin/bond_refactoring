@@ -33,11 +33,11 @@ def get_grouped_folder_name(name: str):
     return f"{parts[0]}_{parts[1]}" if len(parts) > 1 else name
 
 # ==== MAIN FUNCTION ====
-def extract_zip_files(root_path: Path, extracted_path: Path):
+def extract_zip_files(root_path: Path, extract_subfolder: Path):
     """
     Extracts data from zip files in root_path to extracted path
     """
-    make_dir_if_not_exists(extracted_path)
+    make_dir_if_not_exists(root_path / extract_subfolder)
 
     zip_filenames_list = get_list_of_zip_files(root_path)
     logging.info(f"Found {len(zip_filenames_list)} ZIP files")
@@ -45,7 +45,7 @@ def extract_zip_files(root_path: Path, extracted_path: Path):
     for zip_number, zip_file in enumerate(zip_filenames_list, 1):
         zip_file_path = root_path / f"{zip_file}.zip"
         grouped_name = get_grouped_folder_name(zip_file).replace("BON_", "")
-        target_folder = extracted_path / grouped_name
+        target_folder = root_path / extract_subfolder / grouped_name
 
         make_dir_if_not_exists(target_folder)
 
