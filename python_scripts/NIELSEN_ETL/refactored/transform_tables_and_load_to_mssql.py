@@ -55,7 +55,7 @@ def load_csv_to_mssql(file_path, table_name, columns, conn_str, rows_per_batch=1
 
     conn.close()
 
-def process_folder_tree_and_load_to_mssql(ingest_folder, conn_str, columns, rows_per_batch=10000):
+def process_folder_tree_and_load_to_mssql(ingest_folder, conn_str, columns_dictionary, rows_per_batch=10000):
     """
     Walk through all subfolders in the root_path, find CSVs or splited folders,
     and load them into MSSQL using predefined schema.
@@ -75,11 +75,11 @@ def process_folder_tree_and_load_to_mssql(ingest_folder, conn_str, columns, rows
             for csv_file in splited_dir.glob("*.csv"):
                 table_name = f"{folder_name}_fact_data"
                 logging.info(f"📂 Loading split CSV {csv_file.name} into {table_name}")
-                load_csv_to_mssql(csv_file, table_name, columns, conn_str, rows_per_batch)
+                load_csv_to_mssql(csv_file, table_name, columns_dictionary['FACT'].split('|'), conn_str, rows_per_batch)
         else:
             for csv_file in folder.glob("*.csv"):
                 file_type = detect_file_type(csv_file)
                 if file_type:
                     table_name = f"{folder_name}_{file_type}"
                     logging.info(f"📂 Loading CSV {csv_file.name} into {table_name}")
-                    load_csv_to_mssql(csv_file, table_name, columns, conn_str, rows_per_batch)
+                    load_csv_to_mssql(csv_file, table_name, columns_dictionary[table_name].split('|'), conn_str, rows_per_batch)
