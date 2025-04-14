@@ -40,7 +40,7 @@ REPORTS_OUTPUT_FOLDER       = 'trends_report'
 
 
 # ========================== VARIABLES ==========================
-script_run_date                  = date.today()
+script_run_date                  = date(2023,1,1)
 previous_monday                  = str(script_run_date - timedelta(days=(script_run_date.isoweekday() % 7  - 1 + 7)))
 previous_sunday                  = str(script_run_date - timedelta(days=(script_run_date.isoweekday() % 7)))
 script_run_starttime             = datetime.now().strftime("%H%M%S")
@@ -425,7 +425,7 @@ download_product_or_client_reference_excel(
     filename         = SHOPS_OUTPUT_FILE_NAME)
 
 json_trends_report = {
-    "name": f"trends_report_{script_run_date.strftime("%Y%m%d")}_{script_run_starttime}",
+    "name": f"trends_report_{ingest_folder_path}_{script_run_starttime}",
     "type": "8ddb5b9f-2193-453c-96ba-a0a3c14e517c",
     "sectionIds": ["c6941662-29fc-4273-888f-ec2e348782c7"],
     "export": True,
