@@ -1,32 +1,39 @@
 import zipfile
 from pathlib import Path
-import pandas as pd
+import shutil
 
-def unzip_and_convert_xlsx_to_csv(zip_path):
+def unzip_all_flat(folder_path, allowed_exts=None):
     """
-    Unpacks a .zip file, reads all .xlsx files inside, and saves them as .csv in the same directory.
+    Unzips all .zip files in the given folder and flattens the content
+    into the same folder (ignoring subdirectories inside zips).
 
     Args:
-        zip_path (str or Path): Path to the zip archive.
+        folder_path (str or Path): Path to the folder containing ZIP files.
+        allowed_exts (list[str] or None): List of extensions to extract (e.g., ['.csv', '.xlsx']).
+                                          If None, extracts all file types.
 
     Returns:
-        List[Path]: Paths to all saved CSV files.
+        List[Path]: List of extracted file paths.
     """
-    zip_path = Path(zip_path)
-    output_folder = zip_path.parent
-    saved_csv_paths = []
+    folder_path = Path(folder_path)
+    extracted_files = []
 
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(output_folder)
-        for member in zip_ref.namelist():
-            extracted_file = output_folder / member
-            if extracted_file.suffix.lower() == ".xlsx":
-                try:
-                    df = pd.read_excel(extracted_file)
-                    csv_path = extracted_file.with_suffix('.csv')
-                    df.to_csv(csv_path, index=False)
-                    saved_csv_paths.append(csv_path)
-                except Exception as e:
-                    print(f"Failed to convert {extracted_file.name}: {e}")
+    for zip_file in folder_path.glob("*.zip"):
+        with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+            for member in zip_ref.infolist():
+                # Skip directories
+                if member.is_dir():
+                    continue
 
-    return saved_csv_paths
+                # Optional: filter by file extension
+                ext = Path(member.filename).suffix.lower()
+                if allowed_exts and ext not in allowed_exts:
+                    continue
+
+                # Build output path and extract
+                out_path = folder_path / Path(member.filename).name
+                with zip_ref.open(member) as source, open(out_path, 'wb') as target:
+                    shutil.copyfileobj(source, target)
+                extracted_files.append(out_path)
+
+    return extracted_files
