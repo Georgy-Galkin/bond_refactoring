@@ -1,0 +1,113 @@
+2025=04=15 17:37:52 utils.py:Generating date ranges with step 7 days
+2025=04=15 17:37:52 utils.py:Generated 1 date ranges: [('2025-04-08', '2025-04-14')]
+2025=04=15 17:37:52 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:37:53 connectionpool.py:https://lp-api.x5.ru:443 "POST /v2/logistics/auth HTTP/1.1" 200 None
+2025=04=15 17:37:53 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:37:54 connectionpool.py:https://lp-api.x5.ru:443 "POST /v2/logistics/report HTTP/1.1" 201 None
+2025=04=15 17:37:54 connect_and_extract_data_from_api.py:Requested report: SALES, ID: e6c9b949-aa45-46e9-b3bc-1fe18d4c06b5
+2025=04=15 17:37:54 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:37:54 connectionpool.py:https://lp-api.x5.ru:443 "POST /v2/logistics/report HTTP/1.1" 201 None
+2025=04=15 17:37:54 connect_and_extract_data_from_api.py:Requested report: PRODUCT_DIRECTORY_V2, ID: 9555478c-d1b5-4e55-b520-f0c8e7c14bfc
+2025=04=15 17:37:54 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:37:55 connectionpool.py:https://lp-api.x5.ru:443 "POST /v2/logistics/report HTTP/1.1" 201 None
+2025=04=15 17:37:55 connect_and_extract_data_from_api.py:Requested report: SHOP_DIRECTORY_V3, ID: edcb7137-6e95-402c-b967-93f6b1f827af
+2025=04=15 17:37:55 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:37:55 connectionpool.py:https://lp-api.x5.ru:443 "POST /v2/logistics/report HTTP/1.1" 201 None
+2025=04=15 17:37:55 connect_and_extract_data_from_api.py:Requested report: INVENTORY, ID: 43e5bb83-e80d-485c-8980-72f366fbba40
+2025=04=15 17:37:55 connect_and_extract_data_from_api.py:Waiting for reports to be ready...
+2025=04=15 17:37:55 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:37:56 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/e6c9b949-aa45-46e9-b3bc-1fe18d4c06b5/status HTTP/1.1" 200 None
+2025=04=15 17:37:56 connect_and_extract_data_from_api.py:Current status for report SALES: CREATED
+2025=04=15 17:38:01 connect_and_extract_data_from_api.py:Reports left: 4
+2025=04=15 17:38:01 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:01 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/9555478c-d1b5-4e55-b520-f0c8e7c14bfc/status HTTP/1.1" 200 None
+2025=04=15 17:38:01 connect_and_extract_data_from_api.py:Current status for report PRODUCT_DIRECTORY_V2: BUILD
+2025=04=15 17:38:06 connect_and_extract_data_from_api.py:Reports left: 4
+2025=04=15 17:38:06 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:07 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/edcb7137-6e95-402c-b967-93f6b1f827af/status HTTP/1.1" 200 None
+2025=04=15 17:38:07 connect_and_extract_data_from_api.py:Current status for report SHOP_DIRECTORY_V3: DONE
+2025=04=15 17:38:12 connect_and_extract_data_from_api.py:Report SHOP_DIRECTORY_V3 is ready for download
+2025=04=15 17:38:12 connect_and_extract_data_from_api.py:Reports left: 3
+2025=04=15 17:38:12 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:12 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/43e5bb83-e80d-485c-8980-72f366fbba40/status HTTP/1.1" 200 None
+2025=04=15 17:38:12 connect_and_extract_data_from_api.py:Current status for report INVENTORY: BUILD
+2025=04=15 17:38:17 connect_and_extract_data_from_api.py:Reports left: 3
+2025=04=15 17:38:17 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:18 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/e6c9b949-aa45-46e9-b3bc-1fe18d4c06b5/status HTTP/1.1" 200 None
+2025=04=15 17:38:18 connect_and_extract_data_from_api.py:Current status for report SALES: BUILD
+2025=04=15 17:38:23 connect_and_extract_data_from_api.py:Reports left: 3
+2025=04=15 17:38:23 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:23 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/9555478c-d1b5-4e55-b520-f0c8e7c14bfc/status HTTP/1.1" 200 None
+2025=04=15 17:38:23 connect_and_extract_data_from_api.py:Current status for report PRODUCT_DIRECTORY_V2: DONE
+2025=04=15 17:38:28 connect_and_extract_data_from_api.py:Report PRODUCT_DIRECTORY_V2 is ready for download
+2025=04=15 17:38:28 connect_and_extract_data_from_api.py:Reports left: 2
+2025=04=15 17:38:28 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:29 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/edcb7137-6e95-402c-b967-93f6b1f827af/status HTTP/1.1" 200 None
+2025=04=15 17:38:29 connect_and_extract_data_from_api.py:Current status for report SHOP_DIRECTORY_V3: DONE
+2025=04=15 17:38:34 connect_and_extract_data_from_api.py:Report SHOP_DIRECTORY_V3 is ready for download
+2025=04=15 17:38:34 connect_and_extract_data_from_api.py:Reports left: 2
+2025=04=15 17:38:34 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:34 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/43e5bb83-e80d-485c-8980-72f366fbba40/status HTTP/1.1" 200 None
+2025=04=15 17:38:34 connect_and_extract_data_from_api.py:Current status for report INVENTORY: BUILD
+2025=04=15 17:38:39 connect_and_extract_data_from_api.py:Reports left: 2
+2025=04=15 17:38:39 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:40 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/e6c9b949-aa45-46e9-b3bc-1fe18d4c06b5/status HTTP/1.1" 200 None
+2025=04=15 17:38:40 connect_and_extract_data_from_api.py:Current status for report SALES: BUILD
+2025=04=15 17:38:45 connect_and_extract_data_from_api.py:Reports left: 2
+2025=04=15 17:38:45 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:45 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/9555478c-d1b5-4e55-b520-f0c8e7c14bfc/status HTTP/1.1" 200 None
+2025=04=15 17:38:45 connect_and_extract_data_from_api.py:Current status for report PRODUCT_DIRECTORY_V2: DONE
+2025=04=15 17:38:50 connect_and_extract_data_from_api.py:Report PRODUCT_DIRECTORY_V2 is ready for download
+2025=04=15 17:38:51 connect_and_extract_data_from_api.py:Reports left: 2
+2025=04=15 17:38:51 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:51 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/edcb7137-6e95-402c-b967-93f6b1f827af/status HTTP/1.1" 200 None
+2025=04=15 17:38:51 connect_and_extract_data_from_api.py:Current status for report SHOP_DIRECTORY_V3: DONE
+2025=04=15 17:38:56 connect_and_extract_data_from_api.py:Report SHOP_DIRECTORY_V3 is ready for download
+2025=04=15 17:38:56 connect_and_extract_data_from_api.py:Reports left: 2
+2025=04=15 17:38:56 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:38:57 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/43e5bb83-e80d-485c-8980-72f366fbba40/status HTTP/1.1" 200 None
+2025=04=15 17:38:57 connect_and_extract_data_from_api.py:Current status for report INVENTORY: DONE
+2025=04=15 17:39:02 connect_and_extract_data_from_api.py:Report INVENTORY is ready for download
+2025=04=15 17:39:02 connect_and_extract_data_from_api.py:Reports left: 1
+2025=04=15 17:39:02 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:39:02 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/e6c9b949-aa45-46e9-b3bc-1fe18d4c06b5/status HTTP/1.1" 200 None
+2025=04=15 17:39:02 connect_and_extract_data_from_api.py:Current status for report SALES: DONE
+2025=04=15 17:39:07 connect_and_extract_data_from_api.py:Report SALES is ready for download
+2025=04=15 17:39:07 connect_and_extract_data_from_api.py:Reports left: 0
+2025=04=15 17:39:07 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:39:08 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/9555478c-d1b5-4e55-b520-f0c8e7c14bfc/status HTTP/1.1" 200 None
+2025=04=15 17:39:08 connect_and_extract_data_from_api.py:Current status for report PRODUCT_DIRECTORY_V2: DONE
+2025=04=15 17:39:13 connect_and_extract_data_from_api.py:Report PRODUCT_DIRECTORY_V2 is ready for download
+2025=04=15 17:39:13 connect_and_extract_data_from_api.py:Reports left: 0
+2025=04=15 17:39:13 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:39:13 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/edcb7137-6e95-402c-b967-93f6b1f827af/status HTTP/1.1" 200 None
+2025=04=15 17:39:13 connect_and_extract_data_from_api.py:Current status for report SHOP_DIRECTORY_V3: DONE
+2025=04=15 17:39:18 connect_and_extract_data_from_api.py:Report SHOP_DIRECTORY_V3 is ready for download
+2025=04=15 17:39:18 connect_and_extract_data_from_api.py:Reports left: 0
+2025=04=15 17:39:18 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:39:19 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/43e5bb83-e80d-485c-8980-72f366fbba40/status HTTP/1.1" 200 None
+2025=04=15 17:39:19 connect_and_extract_data_from_api.py:Current status for report INVENTORY: DONE
+2025=04=15 17:39:24 connect_and_extract_data_from_api.py:Report INVENTORY is ready for download
+2025=04=15 17:39:24 connect_and_extract_data_from_api.py:Reports left: 0
+2025=04=15 17:39:24 connect_and_extract_data_from_api.py:All reports ready. Starting download...
+2025=04=15 17:39:24 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:39:24 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/e6c9b949-aa45-46e9-b3bc-1fe18d4c06b5/status HTTP/1.1" 200 None
+2025=04=15 17:39:24 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:39:29 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/cd481687-3709-465d-bda4-472e83679f9e15891346265789522697.zip/download HTTP/1.1" 200 2296271
+2025=04=15 17:40:30 connect_and_extract_data_from_api.py:Downloaded and extracted report: SALES
+2025=04=15 17:40:30 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:40:30 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/9555478c-d1b5-4e55-b520-f0c8e7c14bfc/status HTTP/1.1" 200 None
+2025=04=15 17:40:30 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:40:31 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/a2ac5ebb-ed8c-4572-8502-8427a4e3735913600769561230137901.zip/download HTTP/1.1" 200 9082
+2025=04=15 17:40:31 connect_and_extract_data_from_api.py:Downloaded and extracted report: PRODUCT_DIRECTORY_V2
+2025=04=15 17:40:31 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:40:31 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/edcb7137-6e95-402c-b967-93f6b1f827af/status HTTP/1.1" 200 None
+2025=04=15 17:40:31 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:40:32 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/fda25b5a-cb76-4853-8b1e-54073fbada7a3242158172935287207.zip/download HTTP/1.1" 200 7304475
+2025=04=15 17:40:36 connect_and_extract_data_from_api.py:Downloaded and extracted report: SHOP_DIRECTORY_V3
+2025=04=15 17:40:36 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:40:36 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/43e5bb83-e80d-485c-8980-72f366fbba40/status HTTP/1.1" 200 None
+2025=04=15 17:40:36 connectionpool.py:Starting new HTTPS connection (1): lp-api.x5.ru:443
+2025=04=15 17:40:37 connectionpool.py:https://lp-api.x5.ru:443 "GET /v2/logistics/report/8b723f42-c323-4537-8d25-0f40867e5e725134706584905044649.zip/download HTTP/1.1" 200 11826009
+2025=04=15 17:40:43 connect_and_extract_data_from_api.py:Downloaded and extracted report: INVENTORY
+2025=04=15 17:40:43 connect_and_extract_data_from_api.py:All reports were successfully downloaded and extracted
