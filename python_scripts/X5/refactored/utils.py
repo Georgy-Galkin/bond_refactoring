@@ -1,6 +1,8 @@
 import zipfile
 from pathlib import Path
 import shutil
+from pathlib import Path
+from typing import List, Union
 
 def unzip_all_flat(folder_path, allowed_exts=None):
     """
@@ -38,10 +40,8 @@ def unzip_all_flat(folder_path, allowed_exts=None):
 
     return extracted_files
 
-from pathlib import Path
-from typing import List, Union
 
-def list_files_with_extension(folder: Union[str, Path], extension: str) -> List[Path]:
+def list_files_with_extension(folder: Union[str, Path], extension: str) -> List[str]:
     """
     Lists all files with the specified extension in the given folder.
 
@@ -50,7 +50,8 @@ def list_files_with_extension(folder: Union[str, Path], extension: str) -> List[
         extension (str): File extension to match (e.g., '.csv', '.xlsx').
 
     Returns:
-        List[Path]: List of full file paths matching the extension.
+        List[str]: List of full file paths (as strings) matching the extension.
     """
     folder = Path(folder)
-    return list(folder.glob(f"*{extension}"))
+    return [str(p) for p in folder.glob(f"*{extension}")]
+
