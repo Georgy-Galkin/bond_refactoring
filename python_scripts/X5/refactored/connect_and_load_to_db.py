@@ -30,11 +30,9 @@ def connect_to_sql_server(server: str, database: str, driver: str = 'ODBC Driver
         raise Exception(f"Failed to connect to {server}\\{database}: {e}")
 
 
-import pyodbc
-import os
-
 def load_csv_to_sql(
-    conn_str: str,
+    conn,
+    cursor,
     table_name: str,
     table_schema: str,
     csv_path: str,
@@ -46,46 +44,43 @@ def load_csv_to_sql(
     codepage: str = '65001'
 ):
     """
-    Loads a CSV file into SQL Server using BULK INSERT, with support for table schema.
+    Loads a CSV file into SQL Server using BULK INSERT with a dynamic table schema.
 
     Args:
+        conn: Active pyodbc connection object.
+        cursor: Active cursor from the connection.
         table_name (str): Target table name.
+        table_schema (str): SQL schema name.
         csv_path (str): Full path to CSV file.
-        columns (list): List of column names to define schema (all will be NVARCHAR(MAX)).
-        conn_str (str): SQL Server connection string.
-        table_schema (str): SQL schema name (default: 'dbo').
-        truncate_before_load (bool): Truncate table before loading.
-        rows_per_batch (int): Number of rows per batch in BULK INSERT.
-        row_separator (str): Row separator (default: '0x0a').
-        field_separator (str): Field separator (default: '|').
-        codepage (str): CSV encoding code page (default: '65001').
+        field_separator (str): Delimiter used in CSV file.
+        columns (list): Column names (assumed NVARCHAR(MAX)).
+        truncate_before_load (bool): Whether to truncate the table before insert.
+        rows_per_batch (int): BULK INSERT batch size.
+        row_separator (str): Line separator (e.g., '0x0a').
+        codepage (str): Encoding (default: '65001' for UTF-8).
     """
     table_full_name = f"[{table_schema}].[{table_name}]"
 
-    conn = pyodbc.connect(conn_str)
-    cursor = conn.cursor()
-
-    # Create schema if it doesn't exist
+    # Create schema if needed
     cursor.execute(f"""
-    IF NOT EXISTS (
-        SELECT 1 FROM sys.schemas WHERE name = '{table_schema}'
-    )
-    EXEC('CREATE SCHEMA [{table_schema}]')
+        IF NOT EXISTS (
+            SELECT 1 FROM sys.schemas WHERE name = '{table_schema}'
+        )
+        EXEC('CREATE SCHEMA [{table_schema}]')
     """)
 
-    # Create table if not exists
+    # Create table if it doesn't exist
     columns_sql = ",\n".join([f"[{col}] NVARCHAR(MAX) NULL" for col in columns])
     create_table_sql = f"""
-    IF OBJECT_ID('{table_full_name}', 'U') IS NULL
-    BEGIN
-        CREATE TABLE {table_full_name} (
-            {columns_sql}
-        )
-    END
+        IF OBJECT_ID('{table_full_name}', 'U') IS NULL
+        BEGIN
+            CREATE TABLE {table_full_name} (
+                {columns_sql}
+            )
+        END
     """
     cursor.execute(create_table_sql)
 
-    # Optional truncate
     if truncate_before_load:
         cursor.execute(f"TRUNCATE TABLE {table_full_name}")
 
@@ -105,7 +100,5 @@ def load_csv_to_sql(
     """
     cursor.execute(bulk_sql)
     conn.commit()
-    cursor.close()
-    conn.close()
-
     print(f"✅ CSV loaded into table {table_full_name}")
+

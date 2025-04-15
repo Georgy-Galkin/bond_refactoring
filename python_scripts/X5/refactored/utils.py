@@ -3,6 +3,7 @@ from pathlib import Path
 import shutil
 from typing import List, Union
 import pandas as pd
+
 def unzip_all_flat(folder_path, allowed_exts=None):
     """
     Unzips all .zip files in the given folder and flattens the content
@@ -70,6 +71,6 @@ def convert_xlsx_to_csv(xlsx_path: str) -> str:
 
     df = pd.read_excel(xlsx_file)
     csv_path = xlsx_file.with_suffix('.csv')
-    df.to_csv(csv_path, index=False)
+    df.to_csv(csv_path, index=False, encoding='utf-8')
 
     return str(csv_path)
