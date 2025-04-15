@@ -1,9 +1,8 @@
 import zipfile
 from pathlib import Path
 import shutil
-from pathlib import Path
 from typing import List, Union
-
+import pandas as pd
 def unzip_all_flat(folder_path, allowed_exts=None):
     """
     Unzips all .zip files in the given folder and flattens the content
@@ -55,3 +54,22 @@ def list_files_with_extension(folder: Union[str, Path], extension: str) -> List[
     folder = Path(folder)
     return [str(p) for p in folder.glob(f"*{extension}")]
 
+def convert_xlsx_to_csv(xlsx_path: str) -> str:
+    """
+    Converts a single .xlsx file to .csv and saves it in the same folder.
+
+    Args:
+        xlsx_path (str): Full path to the .xlsx file.
+
+    Returns:
+        str: Full path to the generated .csv file.
+    """
+    xlsx_file = Path(xlsx_path)
+    if not xlsx_file.exists() or xlsx_file.suffix.lower() != '.xlsx':
+        raise ValueError(f"Invalid .xlsx file: {xlsx_path}")
+
+    df = pd.read_excel(xlsx_file)
+    csv_path = xlsx_file.with_suffix('.csv')
+    df.to_csv(csv_path, index=False)
+
+    return str(csv_path)
