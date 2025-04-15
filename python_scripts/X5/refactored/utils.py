@@ -37,3 +37,20 @@ def unzip_all_flat(folder_path, allowed_exts=None):
                 extracted_files.append(out_path)
 
     return extracted_files
+
+from pathlib import Path
+from typing import List, Union
+
+def list_files_with_extension(folder: Union[str, Path], extension: str) -> List[Path]:
+    """
+    Lists all files with the specified extension in the given folder.
+
+    Args:
+        folder (str or Path): The folder to search in.
+        extension (str): File extension to match (e.g., '.csv', '.xlsx').
+
+    Returns:
+        List[Path]: List of full file paths matching the extension.
+    """
+    folder = Path(folder)
+    return list(folder.glob(f"*{extension}"))
