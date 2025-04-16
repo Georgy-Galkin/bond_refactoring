@@ -54,24 +54,33 @@ def copy_sftp_files_by_date(sftp, remote_dir, local_dir, start_date, end_date):
     print(f"✅ Done. {files_copied} file(s) copied to: {local_dir}")
 
 
+from pathlib import Path
+from datetime import datetime
+import os
+
 def download_filtered_sftp_files(
     sftp,
     remote_dir: str,
     local_dir: str,
     allowed_extensions: list,
     start_date: datetime,
-    end_date: datetime
+    end_date: datetime,
+    valid_db_names: list
 ):
     """
-    Downloads files from SFTP server based on extension and modification time.
+    Downloads files from an SFTP server based on:
+    - file extension,
+    - modification date,
+    - and folder (or file path) name matching any of the valid_db_names.
 
     Args:
         sftp (paramiko.SFTPClient): Active SFTP connection.
-        remote_dir (str): Directory on the SFTP server to scan.
-        local_dir (str): Local path to download files to.
-        allowed_extensions (list): List of file extensions (e.g., ['.csv', '.zip']).
-        start_date (datetime): Start datetime to filter by modification date.
-        end_date (datetime): End datetime to filter by modification date.
+        remote_dir (str): SFTP directory to search.
+        local_dir (str): Local directory to download files to.
+        allowed_extensions (list): Extensions to filter (e.g., ['.csv', '.zip']).
+        start_date (datetime): Start of modification date range.
+        end_date (datetime): End of modification date range.
+        valid_db_names (list): List of valid folder/file name patterns to match.
     """
     Path(local_dir).mkdir(parents=True, exist_ok=True)
 
@@ -80,9 +89,16 @@ def download_filtered_sftp_files(
             filename = file_attr.filename
             mtime = datetime.fromtimestamp(file_attr.st_mtime)
 
+            # Skip if extension doesn't match
             if not any(filename.lower().endswith(ext.lower()) for ext in allowed_extensions):
                 continue
+
+            # Skip if mtime is outside the desired range
             if not (start_date <= mtime <= end_date):
+                continue
+
+            # Skip if filename doesn't contain any valid DB name
+            if not any(db.lower() in filename.lower() for db in valid_db_names):
                 continue
 
             remote_path = f"{remote_dir}/{filename}"
@@ -93,14 +109,3 @@ def download_filtered_sftp_files(
 
     except Exception as e:
         print(f"❌ Error during download: {e}")
-
-    
-sftp = connect_sftp_with_pem('mowmft.n-df.ru',22, 'BONDUELLE', 'C:\\Users\\georg\\Desktop\\PK.pem')
-download_filtered_sftp_files(
-    sftp,
-    remote_dir = "/Download_From_Nielsen",
-    local_dir  = "C:\\Users\\georg\\Desktop\\NIELSEN\\",
-    allowed_extensions = ['.zip'],
-    start_date = datetime(2025, 4, 10),
-    end_date = datetime(2025, 4, 15)
-)
